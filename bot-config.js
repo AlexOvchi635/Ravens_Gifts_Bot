@@ -7,7 +7,7 @@ const botConfig = {
     botUsername: '@ZarGatesGiftsBot',
     
     // Web App URL (replace with your actual hosting URL)
-    webAppUrl: 'https://your-domain.com/zargates-gifts',
+    webAppUrl: 'https://alexovchi635.github.io/Ravens_Gifts_Bot',
     
     // Bot commands
     commands: [
