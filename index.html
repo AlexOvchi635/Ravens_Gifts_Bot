@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZarGates Подарки</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>🎁 ZarGates Подарки</h1>
+                <p class="subtitle">Специальные награды для игроков</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Gift Categories -->
+            <section class="gift-categories">
+                <h2>Категории подарков</h2>
+                <div class="category-grid">
+                    <div class="category-card" data-category="daily">
+                        <div class="category-icon">📅</div>
+                        <h3>Ежедневные</h3>
+                        <p>Ежедневные награды и квесты</p>
+                    </div>
+                    <div class="category-card" data-category="special">
+                        <div class="category-icon">⭐</div>
+                        <h3>Специальные</h3>
+                        <p>Особые события и акции</p>
+                    </div>
+                    <div class="category-card" data-category="referral">
+                        <div class="category-icon">👥</div>
+                        <h3>Реферальные</h3>
+                        <p>Награды за приглашения</p>
+                    </div>
+                    <div class="category-card" data-category="seasonal">
+                        <div class="category-icon">🎯</div>
+                        <h3>Сезонные</h3>
+                        <p>Сезонные билеты и события</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Available Gifts -->
+            <section class="available-gifts">
+                <h2>Доступные подарки</h2>
+                <div class="gifts-container" id="giftsContainer">
+                    <!-- Gifts will be loaded here -->
+                </div>
+            </section>
+
+            <!-- Slang Guide -->
+            <section class="slang-guide">
+                <h2>📚 Гайд по сленгу</h2>
+                <div class="slang-list" id="slangList">
+                    <!-- Slang items will be loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-tab="gifts">
+                <span class="nav-icon">🎁</span>
+                <span class="nav-text">Подарки</span>
+            </button>
+            <button class="nav-btn" data-tab="slang">
+                <span class="nav-icon">📚</span>
+                <span class="nav-text">Сленг</span>
+            </button>
+            <button class="nav-btn" data-tab="profile">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Профиль</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Gift Modal -->
+    <div class="modal" id="giftModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Получить подарок</h3>
+                <button class="close-btn" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="claimGift">Получить</button>
+                <button class="btn btn-secondary" id="cancelGift">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
