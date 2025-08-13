@@ -1,8 +1,14 @@
 // Telegram Web App initialization
 let tg = window.Telegram.WebApp;
 
+// IPFS image URL for loading screen
+const LOADING_IMAGE_URL = 'https://white-worthwhile-nightingale-687.mypinata.cloud/ipfs/bafybeidj6oeqcf5uce76acu7j4sjhh6ii5ichyorrrhi5ldsuk63nii434';
+
 // Initialize the app
 document.addEventListener('DOMContentLoaded', function() {
+    // Show initial loading screen
+    showLoadingScreen('Загружаем ZarGates Подарки...', 'Подготавливаем приложение для вас');
+    
     // Initialize Telegram Web App
     tg.ready();
     tg.expand();
@@ -12,12 +18,63 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.classList.add('dark-theme');
     }
     
-    // Load initial data
-    loadSlangData();
-    loadGiftsData();
-    setupEventListeners();
-    setupNavigation();
+    // Simulate loading time and then load app
+    setTimeout(() => {
+        hideLoadingScreen();
+        
+        // Load initial data
+        loadSlangData();
+        loadGiftsData();
+        setupEventListeners();
+        setupNavigation();
+    }, 2000);
 });
+
+// Show loading screen with IPFS image
+function showLoadingScreen(title, subtitle = '') {
+    // Remove existing loading screen if any
+    hideLoadingScreen();
+    
+    const loadingOverlay = document.createElement('div');
+    loadingOverlay.className = 'loading-overlay';
+    loadingOverlay.id = 'loadingOverlay';
+    
+    loadingOverlay.innerHTML = `
+        <img src="${LOADING_IMAGE_URL}" alt="ZarGates Loading" class="loading-image" 
+             onerror="this.style.display='none'">
+        <div class="loading-text">${title}</div>
+        ${subtitle ? `<div class="loading-subtitle">${subtitle}</div>` : ''}
+        <div class="loading-spinner"></div>
+    `;
+    
+    document.body.appendChild(loadingOverlay);
+}
+
+// Hide loading screen
+function hideLoadingScreen() {
+    const existingOverlay = document.getElementById('loadingOverlay');
+    if (existingOverlay) {
+        existingOverlay.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            if (existingOverlay.parentNode) {
+                existingOverlay.parentNode.removeChild(existingOverlay);
+            }
+        }, 300);
+    }
+}
+
+// Show loading state in modal with IPFS image
+function showModalLoading(message) {
+    const modalBody = document.getElementById('modalBody');
+    
+    modalBody.innerHTML = `
+        <div class="loading">
+            <img src="${LOADING_IMAGE_URL}" alt="Loading" class="loading-image" 
+                 onerror="this.style.display='none'">
+            <div class="loading-text">${message}</div>
+        </div>
+    `;
+}
 
 // Slang data from your file
 const slangData = [
@@ -282,41 +339,55 @@ function showProfileTab() {
 // Filter gifts by category
 function filterGiftsByCategory(category) {
     const giftsContainer = document.getElementById('giftsContainer');
-    const filteredGifts = giftsData.filter(gift => gift.category === category);
     
-    giftsContainer.innerHTML = '';
+    // Show loading state with IPFS image
+    giftsContainer.innerHTML = `
+        <div class="loading">
+            <img src="${LOADING_IMAGE_URL}" alt="Loading" class="loading-image" 
+                 onerror="this.style.display='none'">
+            <div class="loading-text">Загружаем подарки...</div>
+        </div>
+    `;
     
-    if (filteredGifts.length === 0) {
-        giftsContainer.innerHTML = `
-            <div class="loading">
-                Нет подарков в этой категории
-            </div>
-        `;
-        return;
-    }
-    
-    filteredGifts.forEach(gift => {
-        const giftItem = document.createElement('div');
-        giftItem.className = 'gift-item';
-        giftItem.setAttribute('data-gift-id', gift.id);
+    // Simulate loading delay for better UX
+    setTimeout(() => {
+        const filteredGifts = giftsData.filter(gift => gift.category === category);
         
-        giftItem.innerHTML = `
-            <div class="gift-icon">${gift.icon}</div>
-            <div class="gift-info">
-                <div class="gift-title">${gift.title}</div>
-                <div class="gift-description">${gift.description}</div>
-                <div class="gift-status ${gift.status}">
-                    ${getStatusText(gift.status)}
+        giftsContainer.innerHTML = '';
+        
+        if (filteredGifts.length === 0) {
+            giftsContainer.innerHTML = `
+                <div class="loading">
+                    <div class="loading-text">Нет подарков в этой категории</div>
+                    <div class="loading-subtitle">Попробуйте другую категорию</div>
                 </div>
-            </div>
-        `;
-        
-        if (gift.status === 'available') {
-            giftItem.addEventListener('click', () => showGiftModal(gift));
+            `;
+            return;
         }
         
-        giftsContainer.appendChild(giftItem);
-    });
+        filteredGifts.forEach(gift => {
+            const giftItem = document.createElement('div');
+            giftItem.className = 'gift-item';
+            giftItem.setAttribute('data-gift-id', gift.id);
+            
+            giftItem.innerHTML = `
+                <div class="gift-icon">${gift.icon}</div>
+                <div class="gift-info">
+                    <div class="gift-title">${gift.title}</div>
+                    <div class="gift-description">${gift.description}</div>
+                    <div class="gift-status ${gift.status}">
+                        ${getStatusText(gift.status)}
+                    </div>
+                </div>
+            `;
+            
+            if (gift.status === 'available') {
+                giftItem.addEventListener('click', () => showGiftModal(gift));
+            }
+            
+            giftsContainer.appendChild(giftItem);
+        });
+    }, 800);
 }
 
 // Claim gift function
@@ -324,11 +395,7 @@ function claimGift() {
     const modalBody = document.getElementById('modalBody');
     
     // Show loading state
-    modalBody.innerHTML = `
-        <div class="loading">
-            Получаем подарок...
-        </div>
-    `;
+    showModalLoading('Получаем подарок...');
     
     // Simulate API call
     setTimeout(() => {
