@@ -254,6 +254,19 @@ function setupEventListeners() {
             closeGiftModal();
         }
     });
+    
+    // Leaderboard tab events
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab-btn')) {
+            const period = e.target.getAttribute('data-period');
+            switchLeaderboardPeriod(period, e.target);
+        }
+        
+        // Copy referral link
+        if (e.target.classList.contains('copy-btn')) {
+            copyReferralLink();
+        }
+    });
 }
 
 // Setup navigation
@@ -284,17 +297,129 @@ function showTab(tab) {
     });
     
     switch(tab) {
-        case 'gifts':
+        case 'referrals':
+            showReferralsTab();
+            break;
+        case 'leaderboard':
+            showLeaderboardTab();
+            break;
+        case 'mainmenu':
             document.querySelector('.gift-categories').style.display = 'block';
             document.querySelector('.available-gifts').style.display = 'block';
             break;
-        case 'slang':
-            document.querySelector('.slang-guide').style.display = 'block';
+        case 'gifts':
+            showGiftsTab();
             break;
         case 'profile':
             showProfileTab();
             break;
     }
+}
+
+// Show referrals tab
+function showReferralsTab() {
+    const mainContent = document.querySelector('.main-content');
+    const referralsSection = document.createElement('section');
+    referralsSection.className = 'referrals-section';
+    referralsSection.innerHTML = `
+        <h2>👥 Referrals</h2>
+        <div class="referrals-info">
+            <div class="referral-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">Total Referrals</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">2,400</div>
+                    <div class="stat-label">Total Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-value">3</div>
+                    <div class="stat-label">Active Referrals</div>
+                </div>
+            </div>
+            <div class="referral-link">
+                <h3>Your Referral Link</h3>
+                <div class="link-container">
+                    <input type="text" value="https://t.me/ZarGatesBot?start=ref123" readonly>
+                    <button class="copy-btn">Copy</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    mainContent.appendChild(referralsSection);
+}
+
+// Show leaderboard tab
+function showLeaderboardTab() {
+    const mainContent = document.querySelector('.main-content');
+    const leaderboardSection = document.createElement('section');
+    leaderboardSection.className = 'leaderboard-section';
+    leaderboardSection.innerHTML = `
+        <h2>🏆 Leaderboard</h2>
+        <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-period="weekly">Weekly</button>
+            <button class="tab-btn" data-period="monthly">Monthly</button>
+            <button class="tab-btn" data-period="alltime">All Time</button>
+        </div>
+        <div class="leaderboard-list">
+            <div class="leaderboard-item top-1">
+                <div class="rank">🥇</div>
+                <div class="player-info">
+                    <div class="player-name">ZarGates_King</div>
+                    <div class="player-level">Level 89</div>
+                </div>
+                <div class="player-score">1,250,420</div>
+            </div>
+            <div class="leaderboard-item top-2">
+                <div class="rank">🥈</div>
+                <div class="player-info">
+                    <div class="player-name">CryptoQueen</div>
+                    <div class="player-level">Level 76</div>
+                </div>
+                <div class="player-score">987,650</div>
+            </div>
+            <div class="leaderboard-item top-3">
+                <div class="rank">🥉</div>
+                <div class="player-info">
+                    <div class="player-name">GamingPro</div>
+                    <div class="player-level">Level 72</div>
+                </div>
+                <div class="player-score">856,320</div>
+            </div>
+            <div class="leaderboard-item">
+                <div class="rank">4</div>
+                <div class="player-info">
+                    <div class="player-name">YourUsername</div>
+                    <div class="player-level">Level 25</div>
+                </div>
+                <div class="player-score">15,420</div>
+            </div>
+        </div>
+    `;
+    
+    mainContent.appendChild(leaderboardSection);
+}
+
+// Show gifts tab
+function showGiftsTab() {
+    const mainContent = document.querySelector('.main-content');
+    const giftsSection = document.createElement('section');
+    giftsSection.className = 'gifts-section';
+    giftsSection.innerHTML = `
+        <h2>🎁 Gifts</h2>
+        <div class="gifts-container" id="giftsContainer">
+            <!-- Gifts will be loaded here -->
+        </div>
+    `;
+    
+    // Load gifts data for this tab
+    loadGiftsData();
+    mainContent.appendChild(giftsSection);
 }
 
 // Show profile tab
@@ -303,27 +428,27 @@ function showProfileTab() {
     const profileSection = document.createElement('section');
     profileSection.className = 'profile-section';
     profileSection.innerHTML = `
-        <h2>👤 Профиль игрока</h2>
+        <h2>👤 Profile</h2>
         <div class="profile-info">
             <div class="profile-avatar">
                 <div class="avatar-placeholder">👤</div>
             </div>
             <div class="profile-details">
-                <h3>Игрок ZarGates</h3>
-                <p>Уровень: 25</p>
-                <p>Опыт: 15,420 / 20,000</p>
+                <h3>ZarGates Player</h3>
+                <p>Level: 25</p>
+                <p>Experience: 15,420 / 20,000</p>
             </div>
         </div>
         <div class="profile-stats">
             <div class="stat-item">
                 <div class="stat-icon">💰</div>
                 <div class="stat-value">15,420</div>
-                <div class="stat-label">Золото</div>
+                <div class="stat-label">Gold</div>
             </div>
             <div class="stat-item">
                 <div class="stat-icon">💎</div>
                 <div class="stat-value">1,250</div>
-                <div class="stat-label">Алмазы</div>
+                <div class="stat-label">Diamonds</div>
             </div>
             <div class="stat-item">
                 <div class="stat-icon">📈</div>
@@ -512,10 +637,89 @@ const profileStyles = `
     }
 `;
 
+// Switch leaderboard period
+function switchLeaderboardPeriod(period, clickedBtn) {
+    // Remove active class from all tab buttons
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Add active class to clicked button
+    clickedBtn.classList.add('active');
+    
+    // Here you would typically fetch new data for the selected period
+    // For now, we'll just show a loading state
+    const leaderboardList = document.querySelector('.leaderboard-list');
+    if (leaderboardList) {
+        leaderboardList.innerHTML = `
+            <div class="loading">
+                <div class="loading-text">Loading ${period} leaderboard...</div>
+            </div>
+        `;
+        
+        // Simulate loading delay
+        setTimeout(() => {
+            // Reload leaderboard data (you can customize this based on period)
+            showLeaderboardTab();
+        }, 1000);
+    }
+}
+
+// Copy referral link to clipboard
+function copyReferralLink() {
+    const linkInput = document.querySelector('.link-container input');
+    if (linkInput) {
+        linkInput.select();
+        linkInput.setSelectionRange(0, 99999); // For mobile devices
+        
+        try {
+            document.execCommand('copy');
+            showCopySuccess();
+        } catch (err) {
+            // Fallback for modern browsers
+            navigator.clipboard.writeText(linkInput.value).then(() => {
+                showCopySuccess();
+            }).catch(() => {
+                showCopyError();
+            });
+        }
+    }
+}
+
+// Show copy success message
+function showCopySuccess() {
+    const copyBtn = document.querySelector('.copy-btn');
+    if (copyBtn) {
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Copied!';
+        copyBtn.style.background = '#2e7d32';
+        
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.style.background = '';
+        }, 2000);
+    }
+}
+
+// Show copy error message
+function showCopyError() {
+    const copyBtn = document.querySelector('.copy-btn');
+    if (copyBtn) {
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = 'Error!';
+        copyBtn.style.background = '#c62828';
+        
+        setTimeout(() => {
+            copyBtn.textContent = originalText;
+            copyBtn.style.background = '';
+        }, 2000);
+    }
+}
+
 // Add profile styles to document
 const styleSheet = document.createElement('style');
 styleSheet.textContent = profileStyles;
 document.head.appendChild(styleSheet);
 
-// Initialize with gifts tab
-showTab('gifts');
+// Initialize with main menu tab
+showTab('mainmenu');
