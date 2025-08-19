@@ -277,6 +277,27 @@ body {
     width: 100%;
 }
 
+/* SVG Icon Styles */
+.nav-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover .nav-icon svg {
+    stroke: #667eea;
+    transform: scale(1.1);
+}
+
+.nav-btn.active .nav-icon svg {
+    stroke: #667eea;
+}
+
 .nav-text {
     font-size: 0.8rem;
     font-weight: 500;
@@ -446,6 +467,11 @@ body {
         font-size: 1.3rem;
     }
     
+    .nav-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+    
     .nav-text {
         font-size: 0.7rem;
         line-height: 1.1;
@@ -511,6 +537,11 @@ body {
         font-size: 1.2rem;
     }
     
+    .nav-icon svg {
+        width: 18px;
+        height: 18px;
+    }
+    
     .nav-text {
         font-size: 0.65rem;
     }
@@ -539,6 +570,11 @@ body {
     
     .nav-icon {
         font-size: 1.6rem;
+    }
+    
+    .nav-icon svg {
+        width: 26px;
+        height: 26px;
     }
     
     .nav-text {
@@ -571,6 +607,11 @@ body {
     
     .nav-icon {
         font-size: 1.8rem;
+    }
+    
+    .nav-icon svg {
+        width: 28px;
+        height: 28px;
     }
     
     .nav-text {
