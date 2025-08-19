@@ -237,6 +237,8 @@ body {
     padding: 15px 10px;
     box-shadow: 0 -2px 20px rgba(0,0,0,0.1);
     z-index: 1000;
+    /* Ensure proper spacing on all devices */
+    gap: 0;
 }
 
 .nav-btn {
@@ -425,6 +427,164 @@ body {
     .modal-content {
         width: 95%;
         margin: 20px;
+    }
+    
+    /* Mobile Navigation */
+    .bottom-nav {
+        padding: 12px 5px;
+        justify-content: space-between;
+    }
+    
+    .nav-btn {
+        padding: 8px 4px;
+        min-width: 50px;
+        max-width: 70px;
+        gap: 3px;
+    }
+    
+    .nav-icon {
+        font-size: 1.3rem;
+    }
+    
+    .nav-text {
+        font-size: 0.7rem;
+        line-height: 1.1;
+    }
+    
+    /* Mobile Referral Stats */
+    .referral-stats {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    /* Mobile Leaderboard */
+    .leaderboard-tabs {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    
+    .tab-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .leaderboard-item {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .rank {
+        font-size: 1.3rem;
+        min-width: 35px;
+    }
+    
+    .player-name {
+        font-size: 0.9rem;
+    }
+    
+    .player-level {
+        font-size: 0.8rem;
+    }
+    
+    .player-score {
+        font-size: 1rem;
+    }
+}
+
+/* Extra Small Mobile */
+@media (max-width: 360px) {
+    .bottom-nav {
+        padding: 10px 2px;
+    }
+    
+    .nav-btn {
+        padding: 6px 2px;
+        min-width: 45px;
+        max-width: 65px;
+    }
+    
+    .nav-icon {
+        font-size: 1.2rem;
+    }
+    
+    .nav-text {
+        font-size: 0.65rem;
+    }
+    
+    .app-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .main-content {
+        padding: 10px;
+    }
+}
+
+/* Tablet and Medium Screens */
+@media (min-width: 481px) and (max-width: 768px) {
+    .bottom-nav {
+        padding: 18px 15px;
+    }
+    
+    .nav-btn {
+        padding: 12px 8px;
+        min-width: 70px;
+        max-width: 90px;
+        gap: 6px;
+    }
+    
+    .nav-icon {
+        font-size: 1.6rem;
+    }
+    
+    .nav-text {
+        font-size: 0.85rem;
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .referral-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+}
+
+/* Large Screens */
+@media (min-width: 769px) {
+    .bottom-nav {
+        padding: 20px 20px;
+    }
+    
+    .nav-btn {
+        padding: 15px 10px;
+        min-width: 80px;
+        max-width: 100px;
+        gap: 8px;
+    }
+    
+    .nav-icon {
+        font-size: 1.8rem;
+    }
+    
+    .nav-text {
+        font-size: 0.9rem;
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 25px;
+    }
+    
+    .referral-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
     }
 }
 
